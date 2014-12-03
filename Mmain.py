@@ -1,5 +1,6 @@
 __author__ = 'yuki'
 #coding UTF-8
+
 import numpy
 from PIL import Image
 from PIL import ImageOps
@@ -8,19 +9,19 @@ from MGaborFilter import GaborFilter
 from MLocalInvariance import LocalInvariance
 from MPrintIMG import PrintIMG
 
-n_orientation = 4
-
-if __name__=="__main__":
-    Im_name = raw_input()
-
-    image = Image.open(Im_name)
-
-    fs1 = GaborFilter(11, 0.4, 2.0, 1.0, n_orientation)
-    fc1 = LocalInvariance(10, n_orientation)
-
+if __name__=="__main__":    
     #test s1 to c1
     input_size = 100 #input image size
     n_scale = 2 #number of scale at InputLayer
+    c1_n_scale = n_scale - 1 #number of scale at c1
+    n_orientation = 4
+    
+    #input an image
+    Im_name = raw_input()
+    image = Image.open(Im_name)
+    
+    fs1 = GaborFilter(11, 0.4, 2.0, 1.0, n_orientation)
+    fc1 = LocalInvariance(10, n_orientation)
 
     ImageOps.grayscale(image).resize((input_size, input_size)).save('base.jpg')
 
@@ -32,7 +33,6 @@ if __name__=="__main__":
     print '\nS1 Layer'
     s1Layer = Layer(input_size, n_scale, 4, "s1")
 
-    c1_n_scale = n_scale - 1 #number of scale at c1
     print "\nC1 Layer"
     c1Layer = Layer(input_size, c1_n_scale, 4, "c1")
 
