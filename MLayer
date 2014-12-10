@@ -1,7 +1,7 @@
 __author__ = 'yuki'
 #coding UTF-8
 
-import numpy
+import numpy as np
 from PIL import Image
 from PIL import ImageOps
 
@@ -20,16 +20,13 @@ class Layer(object):
                 size = self.resize_to_s1(size)
             elif self.LayerType == "c1":
                 size = self.resize_to_c1(size)
-            print size
-            self.array.append(numpy.zeros((size, size, self.n_orientation), dtype=float))
+            print size, "*", size
+            self.array.append(np.zeros((size, size, self.n_orientation), dtype=float))
 
     def set_layer(self, image):
-
-        ImageOps.grayscale(image).resize((self.get_size(0), self.get_size(0))).save('base.jpg') #for test
-
         for s in range(self.n_scale):
             size = self.get_size(s)
-            gray_img = numpy.asarray(ImageOps.grayscale(image).resize((size, size))).T*1.0/255
+            gray_img = np.asarray(ImageOps.grayscale(image).resize((size, size))).T*1.0/255
             for x in range(size):
                 for y in range(size):
                     self.array[s][x, y, 0] = gray_img[x, y]
@@ -55,5 +52,7 @@ class Layer(object):
         return size - 10
 
     def resize_to_c1(self, size):
+        size = self.resize_to_s1(size)
         return size/5 - 1
+
 
