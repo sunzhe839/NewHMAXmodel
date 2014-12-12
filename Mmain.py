@@ -19,9 +19,8 @@ if __name__=="__main__":
     #input an image
     Im_name = raw_input()
     image = Image.open(Im_name)
-
-    #fs1 = GaborFilter(11, 0.4, 2.0, 1.0, n_orientation)  :previous parameter
-    fs1 = GaborFilter(11, 0.4, 4.0, 1.5, n_orientation)
+    
+    fs1 = GaborFilter(11, 0.3, 4.0, 1.0, n_orientation)
     fc1 = LocalInvariance(10, n_orientation)
 
     ImageOps.grayscale(image).resize((input_size, input_size)).save('base.jpg')
