@@ -14,12 +14,12 @@ from training_svm import TrainingSVM
 from prediction_svm import PredictionSVM
 import time
 
-INPUT_SIZE = 100  # Input image size
-SCALES = 3  # Number of scales at InputLayer
+INPUT_SIZE = 256  # Input image size
+SCALES = 12  # Number of scales at InputLayer
 C1_SCALES = SCALES - 1  # Number of scales at c1
 ORIENTATIONS = 4  # Number of orientations
 PROTOTYPE_SIZE = 4  # Prototype patch size
-FEATURES = 10  # Number of features
+FEATURES = 20  # Number of features at largest scale
 TRAINING_IMAGES_FOLDER_NAME = "training_image"
 FEATURES_FOLDER_NAME = "training_data"
 CLASSIFIER_FOLDER_NAME = "classifier_data"
