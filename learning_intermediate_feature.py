@@ -6,18 +6,14 @@ import os.path as path
 
 
 class LearningIntermediateFeature(object):
-    def __init__(self, filter_size, orientations, filename):
+    def __init__(self, filter_size, orientations, folder_name):
         self.filter_size = filter_size  # size of patch
         self.orientations = orientations  # number of orientation
-        self.filename = filename
+        self.folder_name = folder_name
 
-    def compute_s2(self, input_layer, output_layer, data_number):
+    def compute_s2(self, input_layer, output_layer, filename):
         self.compute_layer(input_layer, output_layer)
-        scales = output_layer.get_scales()
-        save_data = []
-        for s in range(scales):
-            save_data.append(output_layer.get_array(s))
-        np.savez(self.filename + "/" + str(data_number), save_data)
+        output_layer.save_layer(self.folder_name, filename)
 
     def compute_layer(self, input_layer, output_layer):
         scales = output_layer.get_scales()
