@@ -3,6 +3,7 @@ __author__ = 'yuki'
 
 import numpy as np
 from filter import Filter
+from MPrintIMG import Print
 
 
 class GaborFilter(Filter):
@@ -41,23 +42,18 @@ class GaborFilter(Filter):
                     ptr[x - start, y - start] = e
 
             self.gabor_filter[o, :, :] = ptr
-            #Print().PrintGaborFilter(self.gabor_filter, 1)
+        #Print().PrintGaborFilter(self.gabor_filter, 1)
 
 
     def compute_unit(self, input_layer, scale, feature, x, y, orientation):
         # "feature" is not used
-        res = 0.0
-        lenc = 0.0
-        gabor = self.gabor_filter[orientation, :, :]
-        patch = input_layer.get_array(scale)[0, x:x + self.filter_size, y:y + self.filter_size]
+        gabor = self.gabor_filter[orientation, :, :].T
+        patch = input_layer.get_array(scale)[0, x:x + self.filter_size, y:y + self.filter_size].T
 
-        # convolve
-        for xi in range(self.filter_size):
-            for yi in range(self.filter_size):
-                w = gabor[xi, yi]
-                v = patch[xi, yi]
-                res += w * v
-                lenc += v * v
+        r = gabor * patch
+        res = r.sum()
+        l = patch * patch
+        lenc = l.sum()
 
         res = abs(res)
         if lenc > 0:
